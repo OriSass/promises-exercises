@@ -9,6 +9,15 @@
 function mapPromise(promise, transformer){
   return new Promise((resolve, reject) => {
     /* IMPLEMENT ME!! */
+   
+    promise.catch((error) => {
+      reject(error)
+    });
+    let result = promise.then((res) =>{
+      return transformer(res);
+    });
+    resolve(result);
+    reject(result);
   });
 }
 
@@ -21,8 +30,24 @@ function mapPromise(promise, transformer){
  */
 function squarePromise(numberPromise){
   return numberPromise
-    .then(/* IMPLEMENT ME! */);
-}
+    .then((arg) => {
+        return new Promise((resolve, reject) => {
+          console.log(isNaN(Number(arg)));
+          if(typeof(arg) === "number" && isNaN(Number(arg)) === false)
+          {
+              resolve(arg * arg);
+          }
+          if(isNaN(Number(arg)))
+          {
+            reject("Cannot convert to a number!");
+          }
+          if(typeof(arg) === "string" && !isNaN(Number(arg)))
+          {
+             let newArg = Number(arg);
+             resolve(newArg * newArg);  
+          }          
+    });
+})};
 
 /**
  * EXERCISE 3
